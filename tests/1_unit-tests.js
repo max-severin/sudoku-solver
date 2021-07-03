@@ -30,13 +30,21 @@ suite('UnitTests', () => {
     assert.isFalse(solver.validate(testString));
   });
 
-  // test('Logic handles a valid row placement', function () {
-  //   //
-  // });
+  test('Logic handles a valid row placement', function () {
+    let testString = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+    assert.isTrue(solver.checkRowPlacement(testString, 1, 1, 1));
+    assert.isTrue(solver.checkRowPlacement(testString, 1, 2, 3));
+    assert.isTrue(solver.checkRowPlacement(testString, 1, 3, 5));
+    assert.isTrue(solver.checkRowPlacement(testString, 4, 2, 4));
+  });
 
-  // test('Logic handles an invalid row placement', function () {
-  //   //
-  // });
+  test('Logic handles an invalid row placement', function () {
+    let testString = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+    assert.isFalse(solver.checkRowPlacement(testString, 1, 1, 2));
+    assert.isFalse(solver.checkRowPlacement(testString, 1, 2, 4));
+    assert.isFalse(solver.checkRowPlacement(testString, 1, 3, 8));
+    assert.isFalse(solver.checkRowPlacement(testString, 4, 2, 1));
+  });
 
   // test('Logic handles a valid column placement', function () {
   //   //
