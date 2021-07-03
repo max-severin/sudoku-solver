@@ -14,7 +14,12 @@ class SudokuSolver {
   }
 
   checkColPlacement(puzzleString, row, column, value) {
+    let colString = puzzleString.slice(column - 1, column)
+                      .concat(puzzleString.slice(column).split('').filter((x, i) => (i + 1) % 9 === 0).join(''));
 
+    colString = colString.slice(0, row - 1).concat(colString.slice(row));
+
+    return !colString.includes(value);
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {

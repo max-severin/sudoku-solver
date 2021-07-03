@@ -41,18 +41,26 @@ suite('UnitTests', () => {
   test('Logic handles an invalid row placement', function () {
     let testString = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
     assert.isFalse(solver.checkRowPlacement(testString, 1, 1, 2));
-    assert.isFalse(solver.checkRowPlacement(testString, 1, 2, 4));
-    assert.isFalse(solver.checkRowPlacement(testString, 1, 3, 8));
+    assert.isFalse(solver.checkRowPlacement(testString, 1, 2, 2));
+    assert.isFalse(solver.checkRowPlacement(testString, 1, 3, 4));
     assert.isFalse(solver.checkRowPlacement(testString, 4, 2, 1));
   });
 
-  // test('Logic handles a valid column placement', function () {
-  //   //
-  // });
+  test('Logic handles a valid column placement', function () {
+    let testString = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+    assert.isTrue(solver.checkColPlacement(testString, 1, 1, 1));
+    assert.isTrue(solver.checkColPlacement(testString, 3, 2, 2));
+    assert.isTrue(solver.checkColPlacement(testString, 4, 2, 9));
+    assert.isTrue(solver.checkColPlacement(testString, 8, 9, 9));
+  });
 
-  // test('Logic handles an invalid column placement', function () {
-  //   //
-  // });
+  test('Logic handles an invalid column placement', function () {
+    let testString = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+    assert.isFalse(solver.checkColPlacement(testString, 1, 1, 2));
+    assert.isFalse(solver.checkColPlacement(testString, 3, 2, 6));
+    assert.isFalse(solver.checkColPlacement(testString, 4, 2, 2));
+    assert.isFalse(solver.checkColPlacement(testString, 8, 9, 7));
+  });
 
   // test('Logic handles a valid region (3x3 grid) placement', function () {
   //   //
