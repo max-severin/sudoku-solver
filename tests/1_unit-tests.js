@@ -62,13 +62,21 @@ suite('UnitTests', () => {
     assert.isFalse(solver.checkColPlacement(testString, 8, 9, 7));
   });
 
-  // test('Logic handles a valid region (3x3 grid) placement', function () {
-  //   //
-  // });
+  test('Logic handles a valid region (3x3 grid) placement', function () {
+    let testString = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+    assert.isTrue(solver.checkRegionPlacement(testString, 1, 2, 3));
+    assert.isTrue(solver.checkRegionPlacement(testString, 2, 7, 2));
+    assert.isTrue(solver.checkRegionPlacement(testString, 4, 3, 1));
+    assert.isTrue(solver.checkRegionPlacement(testString, 8, 8, 2));
+  });
 
-  // test('Logic handles an invalid region (3x3 grid) placement', function () {
-  //   //
-  // });
+  test('Logic handles an invalid region (3x3 grid) placement', function () {
+    let testString = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+    assert.isFalse(solver.checkRegionPlacement(testString, 1, 2, 1));
+    assert.isFalse(solver.checkRegionPlacement(testString, 2, 7, 4));
+    assert.isFalse(solver.checkRegionPlacement(testString, 4, 3, 3));
+    assert.isFalse(solver.checkRegionPlacement(testString, 8, 8, 1));
+  });
 
   // test('Valid puzzle strings pass the solver', function () {
   //   //
