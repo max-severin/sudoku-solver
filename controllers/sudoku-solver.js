@@ -4,9 +4,9 @@ const SIZE_POW_2 = Math.pow(SIZE, 2);
 
 class SudokuSolver {
   validate(puzzleString) {
-    if (puzzleString === '') {
-      throw new Error('Required field missing');
-    }
+    // if (puzzleString === '') {
+    //   throw new Error('Required field missing');
+    // }
 
     if (puzzleString.length !== SIZE_POW_2) {
       throw new Error('Expected puzzle to be 81 characters long');
