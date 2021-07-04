@@ -4,10 +4,6 @@ const SIZE_POW_2 = Math.pow(SIZE, 2);
 
 class SudokuSolver {
   validate(puzzleString) {
-    // if (puzzleString === '') {
-    //   throw new Error('Required field missing');
-    // }
-
     if (puzzleString.length !== SIZE_POW_2) {
       throw new Error('Expected puzzle to be 81 characters long');
     }
@@ -20,16 +16,26 @@ class SudokuSolver {
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
+    const currentIndex = row * SIZE - SIZE + column - 1;
     const from = row * SIZE - SIZE;
     const to = row * SIZE;
     const rowString = puzzleString.slice(from, to);
+
+    if (puzzleString[currentIndex] === value) {
+      return true;
+    }
 
     return !rowString.includes(value);
   }
 
   checkColPlacement(puzzleString, row, column, value) {
+    const currentIndex = row * SIZE - SIZE + column - 1;
     let colString = puzzleString.slice(column - 1, column)
                       .concat(puzzleString.slice(column).split('').filter((x, i) => (i + 1) % 9 === 0).join(''));
+
+    if (puzzleString[currentIndex] === value) {
+      return true;
+    }
 
     return !colString.includes(value);
   }
@@ -37,6 +43,10 @@ class SudokuSolver {
   checkRegionPlacement(puzzleString, row, column, value) {
     const currentIndex = row * SIZE - SIZE + column - 1;
     let thisIndex, fromRow, toRow, fromColumn, toColumn, regionString = '';
+
+    if (puzzleString[currentIndex] === value) {
+      return true;
+    }
 
     for (let i = row; i <= SIZE; i++) {
       if (i % SIZE_SQRT === 0) {
@@ -105,6 +115,7 @@ class SudokuSolver {
     if (this.getEmptyCell(puzzleString)[0] !== -1) {
       puzzleString = puzzleString.slice(0, currentIndex).concat('.').concat(puzzleString.slice(currentIndex + 1));
     }
+    
 
     return puzzleString;
   }
