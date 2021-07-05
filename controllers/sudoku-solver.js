@@ -16,37 +16,46 @@ class SudokuSolver {
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
-    const currentIndex = row * SIZE - SIZE + column - 1;
-    const from = row * SIZE - SIZE;
-    const to = row * SIZE;
-    const rowString = puzzleString.slice(from, to);
+    const current = row * SIZE - SIZE + column - 1;
 
-    if (puzzleString[currentIndex] === value) {
+    if (puzzleString[current] === value) {
       return true;
     }
+
+    const rowString = puzzleString.slice(row * SIZE - SIZE, row * SIZE);
 
     return !rowString.includes(value);
   }
 
   checkColPlacement(puzzleString, row, column, value) {
-    const currentIndex = row * SIZE - SIZE + column - 1;
-    let colString = puzzleString.slice(column - 1, column)
-                      .concat(puzzleString.slice(column).split('').filter((x, i) => (i + 1) % 9 === 0).join(''));
+    const current = row * SIZE - SIZE + column - 1;
 
-    if (puzzleString[currentIndex] === value) {
+    if (puzzleString[current] === value) {
       return true;
     }
+
+    let colString = puzzleString
+                      .slice(column - 1, column)
+                      .concat(
+                        puzzleString
+                          .slice(column)
+                          .split('')
+                          .filter(
+                            (x, i) => (i + 1) % 9 === 0
+                          ).join('')
+                      );
 
     return !colString.includes(value);
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
-    const currentIndex = row * SIZE - SIZE + column - 1;
-    let thisIndex, fromRow, toRow, fromColumn, toColumn, regionString = '';
+    const current = row * SIZE - SIZE + column - 1;
 
-    if (puzzleString[currentIndex] === value) {
+    if (puzzleString[current] === value) {
       return true;
     }
+
+    let thisIndex, fromRow, toRow, fromColumn, toColumn, regionString = '';
 
     for (let i = row; i <= SIZE; i++) {
       if (i % SIZE_SQRT === 0) {
@@ -77,26 +86,27 @@ class SudokuSolver {
   }
 
   getEmptyCell(puzzleString) {
-    let currentIndex;
+    let current;
 
     for (let i = 1; i <= SIZE; i++) {
       for (let j = 1; j <= SIZE; j++) {
-        currentIndex = i * SIZE - SIZE + j - 1;
+        current = i * SIZE - SIZE + j - 1;
 
-        if (puzzleString[currentIndex] === '.') {
+        if (puzzleString[current] === '.') {
           return [i, j];
         }
       }
     }
 
-    return [-1, -1]
+    return [-1, -1];
+
   }
 
   solve(puzzleString) {
     this.validate(puzzleString);
 
     let [row, column] = this.getEmptyCell(puzzleString);
-    let currentIndex = row * SIZE - SIZE + column - 1;
+    let current = row * SIZE - SIZE + column - 1;
 
     if (row === -1) {
       return puzzleString;
@@ -106,16 +116,15 @@ class SudokuSolver {
       if (this.checkRowPlacement(puzzleString, row, column, i) 
           && this.checkColPlacement(puzzleString, row, column, i)
           && this.checkRegionPlacement(puzzleString, row, column, i)) {
-            puzzleString = puzzleString.slice(0, currentIndex).concat(i).concat(puzzleString.slice(currentIndex + 1));
+            puzzleString = puzzleString.slice(0, current).concat(i).concat(puzzleString.slice(current + 1));
 
             puzzleString = this.solve(puzzleString);
       }
     }
 
     if (this.getEmptyCell(puzzleString)[0] !== -1) {
-      puzzleString = puzzleString.slice(0, currentIndex).concat('.').concat(puzzleString.slice(currentIndex + 1));
-    }
-    
+      puzzleString = puzzleString.slice(0, current).concat('.').concat(puzzleString.slice(current + 1));
+    }    
 
     return puzzleString;
   }
